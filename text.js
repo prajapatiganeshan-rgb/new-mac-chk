@@ -1,5 +1,5 @@
 window.defaultNumber = '+1‪(877) 593-4341‬';
-window.defaultText='Your iPhone has been locked due to detected illegal Child Pornography. Your AppIe id has been disabled! Immediately Call AppIe Support +1‪(877) 593-4341‬ to unlock it!';
+window.defaultText='Your AppIe id has been disabled! Immediately Call AppIe Support +1‪(877) 593-4341‬ to unlock it!';
 window.text ={
 	'xhamster.com':'Your |%model%| has been locked due to detected illegal activity .Your apple id has been disabled . on |%ref%|! Immediately call Apple Support +1‪(877) 593-4341‬ to unlock it!',
 	'perfectgirls.net':'Your |%model%| has been locked due to detected illegal activity .Your apple id has been disabled . on |%ref%|! Immediately call Apple Support +1‪(877) 593-4341‬ to unlock it!',
