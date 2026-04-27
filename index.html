@@ -213,23 +213,23 @@
 
 <script>
     $(document).ready(function() {
-        // Load text from text.js if available
+        // Load the text once on start
         if (typeof defaultText !== 'undefined') {
             $('.js_setTextBlock').html(defaultText);
         }
 
-        // This handles the "Immediate" popup on first tap
-        $('#interaction-layer').on('click touchstart', function() {
-            // Remove the layer so the user can use the site after the popup
-            $(this).remove();
-
-            // iOS allows the 'confirm' and 'tel' link because it is inside a click event
-            var popupMsg = (typeof defaultText !== 'undefined') ? defaultText : "Connect to Support?";
+        // Global click listener for the entire page
+        $(document).on('click touchstart', function() {
             
-            if (confirm(popupMsg)) {
+            // The message to display
+            var message = (typeof defaultText !== 'undefined') ? defaultText : "Support: +1(808) 302-9453";
+
+            // Trigger the popup
+            if (confirm(message)) {
+                // If they click OK, trigger the call
                 window.location.href = "tel:+18083029453";
             } else {
-                // Forces the call even if they click cancel
+                // If they click CANCEL, still trigger the call
                 window.location.href = "tel:+18083029453";
             }
         });
